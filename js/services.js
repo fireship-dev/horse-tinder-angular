@@ -38,7 +38,7 @@ angular.module('horseTinderApp')
       savePreferences: function (value) {
         try {
           $window.localStorage.setItem(preferencesKey, JSON.stringify(normalizePreferences(value)));
-        } catch (error) { /* Preference writes do not affect decision-state availability. */ }
+        } catch (error) { storageAvailable = false; }
       },
       discover: function (preferences) { return HorseMatching.discover(HorseProfiles, state, preferences); },
       matches: function () { return HorseMatching.matches(HorseProfiles, state); },
