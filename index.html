@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" ng-app="horseTinderApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="HorseTinder. Find your stable relationship.">
+  <title>HorseTinder · Find your stable relationship</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body ng-controller="DiscoverCtrl as vm">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html" aria-label="HorseTinder home">Horse<span>Tinder</span><span class="heart" aria-hidden="true">♥</span></a>
+      <nav aria-label="Main navigation" ng-cloak>
+        <button type="button" ng-class="{active: vm.view === 'discover'}" ng-attr-aria-current="{{vm.view === 'discover' ? 'page' : undefined}}" ng-click="vm.show('discover')">Discover</button>
+        <button type="button" ng-class="{active: vm.view === 'matches'}" ng-attr-aria-current="{{vm.view === 'matches' ? 'page' : undefined}}" ng-click="vm.show('matches')">Matches <span class="count">{{vm.matches.length}}</span></button>
+      </nav>
+      <span class="your-profile">Your stable <span class="avatar" aria-hidden="true">J</span></span>
+    </div>
+  </header>
+
+  <main class="page" ng-cloak>
+    <aside class="sidebar">
+      <p class="eyebrow">A little less neigh-saying</p>
+      <h1>Find your stable<br> relationship.</h1>
+      <p class="intro">Meet the horses on your side of the fence.</p>
+
+      <form class="filters" ng-submit="$event.preventDefault()">
+        <h2>Discovery preferences</h2>
+        <label for="distance">Maximum distance <strong>{{vm.preferences.maxDistance}} miles</strong></label>
+        <input id="distance" type="range" min="1" max="50" step="1" ng-model="vm.preferences.maxDistance" ng-change="vm.refresh()">
+        <label for="breed">Breed</label>
+        <select id="breed" ng-model="vm.preferences.breed" ng-options="breed for breed in vm.breeds" ng-change="vm.refresh()">
+          <option value="">All breeds</option>
+        </select>
+        <p class="location">Discovering around Palo Alto, CA</p>
+      </form>
+
+      <div class="session">
+        <p>{{vm.decisionCount}} profiles explored · {{vm.matches.length}} mutual matches</p>
+        <button class="text-button" type="button" ng-click="vm.reset()" ng-disabled="!vm.decisionCount">Reset discovery</button>
+      </div>
+    </aside>
+
+    <section class="discovery" ng-show="vm.view === 'discover'" aria-label="Discover horses">
+      <div class="section-heading"><h2>Meet your next mane squeeze</h2><span>{{vm.profiles.length}} nearby</span></div>
+      <article class="profile" ng-if="vm.current">
+        <div class="portrait">
+          <img ng-src="{{vm.current.photo}}" alt="{{vm.current.name}}, a {{vm.current.breed}} horse">
+          <span class="distance">{{vm.current.distance}} miles away</span>
+        </div>
+        <div class="profile-content">
+          <h3>{{vm.current.name}} <span>{{vm.current.age}}</span></h3>
+          <p class="breed-location">{{vm.current.breed}} · {{vm.current.location}}</p>
+          <p class="bio">{{vm.current.bio}}</p>
+          <ul class="interests" aria-label="Interests"><li ng-repeat="interest in vm.current.interests track by interest">{{interest}}</li></ul>
+          <div class="actions">
+            <button class="pass-button" type="button" ng-click="vm.decide('pass')"><span aria-hidden="true">×</span> Pass</button>
+            <button class="like-button" type="button" ng-click="vm.decide('like')"><span aria-hidden="true">♥</span> Like</button>
+          </div>
+        </div>
+      </article>
+      <div class="empty" ng-if="!vm.current">
+        <span class="empty-symbol" aria-hidden="true">♧</span>
+        <h3>You have reached the end of the pasture.</h3>
+        <p>Try a wider distance or another breed to meet more horses.</p>
+        <button class="text-button" type="button" ng-click="vm.reset()" ng-if="vm.decisionCount">Start over</button>
+      </div>
+    </section>
+
+    <section class="matches" ng-show="vm.view === 'matches'" aria-labelledby="matches-title">
+      <div class="section-heading"><h2 id="matches-title">The feeling is mutual.</h2><span>{{vm.matches.length}} matches</span></div>
+      <article class="match-row" ng-repeat="horse in vm.matches track by horse.id">
+        <img ng-src="{{horse.photo}}" alt="{{horse.name}}">
+        <div><h3>{{horse.name}}, {{horse.age}}</h3><p>{{horse.breed}} · {{horse.distance}} miles away</p><span class="match-label">You like each other</span></div>
+      </article>
+      <div class="empty" ng-if="!vm.matches.length"><span class="empty-symbol" aria-hidden="true">♡</span><h3>A stable relationship takes two.</h3><p>When you both like each other, your match will appear here.</p><button class="text-button" type="button" ng-click="vm.show('discover')">Discover horses</button></div>
+    </section>
+
+    <p class="notice" role="status" aria-live="polite">{{vm.notice}}</p>
+    <p class="storage-notice" ng-if="!vm.persists">Your browser cannot save your choices. They will last for this visit only.</p>
+  </main>
+  <noscript><p class="noscript">Enable JavaScript to discover horses on HorseTinder.</p></noscript>
+  <footer><span>HorseTinder © 2026</span><span>Made for long faces and long-term relationships.</span><a href="credits.html">Photo credits</a></footer>
+  <script src="vendor/angular/angular.min.js"></script>
+  <script src="js/profiles.js"></script>
+  <script src="js/matching.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+</body>
+</html>
