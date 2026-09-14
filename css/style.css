@@ -79,6 +79,7 @@ footer a { color: var(--muted); }
   .filters label[for=distance] { grid-column: 1; } .filters input { grid-column: 1; grid-row: 3; }
   .filters label[for=breed] { grid-column: 2; grid-row: 2; } .filters select { grid-column: 2; grid-row: 3; }
   .filters label { font-size: 11px; } .location { margin-top: 12px; } .session { margin: 0 0 25px; padding-top: 5px; }
+  .filters label[for=age-range], .filters #age-range { grid-column: 1 / -1; }
   .portrait { height: 270px; } .section-heading h2 { font-size: 14px; } .notice { min-height: 0; }
   footer { margin: 20px; padding: 18px 0; flex-wrap: wrap; } footer > span:nth-child(2) { display: none; }
 }

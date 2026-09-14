@@ -35,6 +35,10 @@
           <option value="">All breeds</option>
         </select>
         <p class="location">Discovering around Palo Alto, CA</p>
+        <label for="age-range">Age range</label>
+        <select id="age-range" ng-model="vm.preferences.ageRange" ng-options="range.id as range.label for range in vm.ageRanges" ng-change="vm.refresh()">
+          <option value="">Any age</option>
+        </select>
       </form>
 
       <div class="session">

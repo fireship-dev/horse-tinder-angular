@@ -18,6 +18,7 @@ angular.module('horseTinderApp')
 
     return {
       profiles: HorseProfiles,
+      ageRanges: HorseMatching.ageRanges,
       discover: function (preferences) { return HorseMatching.discover(HorseProfiles, state, preferences); },
       matches: function () { return HorseMatching.matches(HorseProfiles, state); },
       decisionCount: function () { return Object.keys(state.decisions).length; },

@@ -5,6 +5,13 @@
 }(this, function () {
   'use strict';
 
+  var ageRanges = [
+    { id: 'young', label: '5 years and under', min: 0, max: 5 },
+    { id: 'adult', label: '6 to 10 years', min: 6, max: 10 },
+    { id: 'mature', label: '11 to 20 years', min: 11, max: 20 },
+    { id: 'senior', label: '21 years and over', min: 21, max: Infinity }
+  ];
+
   function isDecision(value) {
     return value === 'like' || value === 'pass';
   }
@@ -26,10 +33,13 @@
   }
 
   function discover(profiles, state, preferences) {
+    var ageRange = ageRanges.find(function (range) { return range.id === preferences.ageRange; });
+    if (preferences.ageRange && !ageRange) return [];
     return profiles.filter(function (profile) {
       return !Object.prototype.hasOwnProperty.call(state.decisions, profile.id) &&
         profile.distance <= preferences.maxDistance &&
-        (!preferences.breed || profile.breed === preferences.breed);
+        (!preferences.breed || profile.breed === preferences.breed) &&
+        (!ageRange || (profile.age >= ageRange.min && profile.age <= ageRange.max));
     }).sort(function (left, right) {
       return left.distance - right.distance || left.id.localeCompare(right.id);
     });
@@ -53,5 +63,5 @@
     });
   }
 
-  return { restoreState: restoreState, discover: discover, decide: decide, matches: matches };
+  return { ageRanges: ageRanges, restoreState: restoreState, discover: discover, decide: decide, matches: matches };
 }));
