@@ -10,7 +10,7 @@
   }
 
   function restoreState(serialized, profiles) {
-    var state = { version: 1, decisions: {} };
+    var state = { version: 1, decisions: {}, history: [] };
     try {
       var saved = JSON.parse(serialized);
       if (!saved || saved.version !== 1 || !saved.decisions ||
@@ -21,6 +21,12 @@
           state.decisions[profile.id] = saved.decisions[profile.id];
         }
       });
+      if (Array.isArray(saved.history)) {
+        saved.history.forEach(function (id) {
+          if (typeof id === 'string' && Object.prototype.hasOwnProperty.call(state.decisions, id) &&
+              state.history.indexOf(id) === -1) state.history.push(id);
+        });
+      }
     } catch (error) { /* Missing or corrupt browser storage starts a fresh session. */ }
     return state;
   }
@@ -44,7 +50,22 @@
     }
     var decisions = Object.assign({}, state.decisions);
     decisions[profileId] = decision;
-    return { version: 1, decisions: decisions };
+    return { version: 1, decisions: decisions, history: (state.history || []).concat(profileId) };
+  }
+
+  function lastDecision(profiles, state) {
+    var history = state.history || [];
+    var id = history[history.length - 1];
+    var profile = profiles.find(function (horse) { return horse.id === id; });
+    return profile ? { profile: profile, decision: state.decisions[id] } : null;
+  }
+
+  function undo(state) {
+    var history = state.history || [];
+    if (!history.length) return state;
+    var decisions = Object.assign({}, state.decisions);
+    delete decisions[history[history.length - 1]];
+    return { version: 1, decisions: decisions, history: history.slice(0, -1) };
   }
 
   function matches(profiles, state) {
@@ -53,5 +74,6 @@
     });
   }
 
-  return { restoreState: restoreState, discover: discover, decide: decide, matches: matches };
+  return { restoreState: restoreState, discover: discover, decide: decide, matches: matches,
+    lastDecision: lastDecision, undo: undo };
 }));

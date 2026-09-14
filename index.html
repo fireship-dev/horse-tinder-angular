@@ -39,6 +39,7 @@
 
       <div class="session">
         <p>{{vm.decisionCount}} profiles explored · {{vm.matches.length}} mutual matches</p>
+        <p><button class="text-button" type="button" ng-click="vm.undo()" ng-disabled="!vm.lastDecision">Undo last swipe</button></p>
         <button class="text-button" type="button" ng-click="vm.reset()" ng-disabled="!vm.decisionCount">Reset discovery</button>
       </div>
     </aside>

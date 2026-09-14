@@ -15,6 +15,7 @@ angular.module('horseTinderApp')
       vm.matches = stable.matches();
       vm.decisionCount = stable.decisionCount();
       vm.persists = stable.persists();
+      vm.lastDecision = stable.lastDecision();
     };
 
     vm.decide = function (decision) {
@@ -30,6 +31,14 @@ angular.module('horseTinderApp')
     vm.show = function (view) {
       vm.view = view;
       vm.notice = '';
+    };
+
+    vm.undo = function () {
+      if (!vm.lastDecision) return;
+      var previous = vm.lastDecision;
+      stable.undo();
+      vm.notice = 'Undid your ' + previous.decision + ' for ' + previous.profile.name + '.';
+      vm.refresh();
     };
 
     vm.reset = function () {

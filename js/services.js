@@ -20,6 +20,11 @@ angular.module('horseTinderApp')
       profiles: HorseProfiles,
       discover: function (preferences) { return HorseMatching.discover(HorseProfiles, state, preferences); },
       matches: function () { return HorseMatching.matches(HorseProfiles, state); },
+      lastDecision: function () { return HorseMatching.lastDecision(HorseProfiles, state); },
+      undo: function () {
+        state = HorseMatching.undo(state);
+        save();
+      },
       decisionCount: function () { return Object.keys(state.decisions).length; },
       persists: function () { return storageAvailable; },
       decide: function (profileId, decision) {
@@ -27,7 +32,7 @@ angular.module('horseTinderApp')
         save();
       },
       reset: function () {
-        state = { version: 1, decisions: {} };
+        state = { version: 1, decisions: {}, history: [] };
         save();
       }
     };

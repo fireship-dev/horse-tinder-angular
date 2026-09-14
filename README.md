@@ -31,6 +31,9 @@ local. The development server uses Node's standard library.
 - Discover profiles by distance and breed, then choose Pass or Like.
 - A match is created only when a liked profile also likes the current horse.
 - Decisions survive reloads in localStorage. Reset discovery clears them.
+- Undo last swipe restores the most recent decision, including across reloads.
+  Undoing a like removes its resulting mutual match. Older saved sessions without
+  swipe history retain their decisions; undo becomes available after a new swipe.
 - Profiles and reciprocal likes are fictional fixture data, not live users.
 - There is no authentication, remote database, messaging, or external API.
 
