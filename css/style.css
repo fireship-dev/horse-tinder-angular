@@ -65,6 +65,12 @@ select { width: 100%; border: 1px solid #d6d3d0; border-radius: 5px; background:
 .match-row h3 { margin: 0; font-size: 20px; }
 .match-row p { color: var(--muted); font-size: 12px; margin: 3px 0 9px; }
 .match-label { color: var(--accent); font-size: 12px; }
+.match-search { margin: 20px 0; }
+.match-search label { display: block; font-size: 13px; margin-bottom: 8px; }
+.search-controls { display: flex; gap: 12px; align-items: center; }
+.search-controls input { flex: 1; min-width: 0; border: 1px solid #d6d3d0; border-radius: 5px; padding: 10px; }
+.search-controls button { flex-shrink: 0; font-size: 12px; }
+.match-search p { color: var(--muted); font-size: 12px; margin: 8px 0; }
 footer { max-width: 1080px; margin: 25px auto; border-top: 1px solid var(--line); padding: 22px 30px; display: flex; justify-content: space-between; gap: 18px; color: var(--muted); font-size: 11px; }
 footer a { color: var(--muted); }
 .noscript, .credits { max-width: 900px; margin: 40px auto; padding: 0 25px; }
