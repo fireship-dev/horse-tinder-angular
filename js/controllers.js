@@ -4,7 +4,7 @@ angular.module('horseTinderApp')
     'use strict';
     var vm = this;
     vm.view = 'discover';
-    vm.preferences = { maxDistance: 50, breed: '' };
+    vm.preferences = stable.loadPreferences();
     vm.breeds = stable.profiles.map(function (profile) { return profile.breed; })
       .filter(function (breed, index, breeds) { return breeds.indexOf(breed) === index; }).sort();
     vm.notice = '';
@@ -27,6 +27,11 @@ angular.module('horseTinderApp')
       vm.refresh();
     };
 
+    vm.updatePreferences = function () {
+      stable.savePreferences(vm.preferences);
+      vm.refresh();
+    };
+
     vm.show = function (view) {
       vm.view = view;
       vm.notice = '';
@@ -35,6 +40,7 @@ angular.module('horseTinderApp')
     vm.reset = function () {
       stable.reset();
       vm.preferences = { maxDistance: 50, breed: '' };
+      stable.savePreferences(vm.preferences);
       vm.view = 'discover';
       vm.notice = 'Discovery reset. Your likes, passes, and matches have been cleared.';
       vm.refresh();

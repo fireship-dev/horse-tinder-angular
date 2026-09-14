@@ -3,11 +3,27 @@ angular.module('horseTinderApp')
   .factory('stable', ['$window', function ($window) {
     'use strict';
     var key = 'horse-tinder:v1';
+    var preferencesKey = 'horse-tinder:preferences:v1';
     var serialized = null;
     var storageAvailable = true;
     try { serialized = $window.localStorage.getItem(key); }
     catch (error) { storageAvailable = false; }
     var state = HorseMatching.restoreState(serialized, HorseProfiles);
+
+    function normalizePreferences(value) {
+      value = value && typeof value === 'object' ? value : {};
+      var distance = typeof value.maxDistance === 'number' || typeof value.maxDistance === 'string'
+        ? Number(value.maxDistance) : NaN;
+      return {
+        maxDistance: Number.isInteger(distance) && distance >= 1 && distance <= 50 ? distance : 50,
+        breed: HorseProfiles.some(function (horse) { return horse.breed === value.breed; }) ? value.breed : ''
+      };
+    }
+
+    function loadPreferences() {
+      try { return normalizePreferences(JSON.parse($window.localStorage.getItem(preferencesKey))); }
+      catch (error) { return normalizePreferences(null); }
+    }
 
     function save() {
       try {
@@ -18,6 +34,13 @@ angular.module('horseTinderApp')
 
     return {
       profiles: HorseProfiles,
+      loadPreferences: loadPreferences,
+      savePreferences: function (value) {
+        try {
+          $window.localStorage.setItem(preferencesKey, JSON.stringify(normalizePreferences(value)));
+          storageAvailable = true;
+        } catch (error) { storageAvailable = false; }
+      },
       discover: function (preferences) { return HorseMatching.discover(HorseProfiles, state, preferences); },
       matches: function () { return HorseMatching.matches(HorseProfiles, state); },
       decisionCount: function () { return Object.keys(state.decisions).length; },
