@@ -15,6 +15,13 @@ angular.module('horseTinderApp')
       vm.matches = stable.matches();
       vm.decisionCount = stable.decisionCount();
       vm.persists = stable.persists();
+      vm.filtersActive = Number(vm.preferences.maxDistance) !== 50 || vm.preferences.breed !== '';
+    };
+
+    vm.clearFilters = function () {
+      vm.preferences = { maxDistance: 50, breed: '' };
+      vm.notice = 'Discovery filters cleared. Your likes and matches are unchanged.';
+      vm.refresh();
     };
 
     vm.decide = function (decision) {

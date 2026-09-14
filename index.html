@@ -35,6 +35,7 @@
           <option value="">All breeds</option>
         </select>
         <p class="location">Discovering around Palo Alto, CA</p>
+        <button class="text-button" type="button" ng-click="vm.clearFilters()" ng-if="vm.filtersActive">Clear filters</button>
       </form>
 
       <div class="session">
@@ -63,9 +64,10 @@
       </article>
       <div class="empty" ng-if="!vm.current">
         <span class="empty-symbol" aria-hidden="true">♧</span>
-        <h3>You have reached the end of the pasture.</h3>
-        <p>Try a wider distance or another breed to meet more horses.</p>
-        <button class="text-button" type="button" ng-click="vm.reset()" ng-if="vm.decisionCount">Start over</button>
+        <h3>{{vm.filtersActive ? 'No horses match these filters.' : 'You have reached the end of the pasture.'}}</h3>
+        <p>{{vm.filtersActive ? 'Clear your filters to see the remaining horses nearby.' : 'You have explored every nearby profile.'}}</p>
+        <button class="text-button" type="button" ng-click="vm.clearFilters()" ng-if="vm.filtersActive">Show remaining horses</button>
+        <button class="text-button" type="button" ng-click="vm.reset()" ng-if="!vm.filtersActive && vm.decisionCount">Start over</button>
       </div>
     </section>
 
