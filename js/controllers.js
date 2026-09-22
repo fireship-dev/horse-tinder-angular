@@ -4,6 +4,7 @@ angular.module('horseTinderApp')
     'use strict';
     var vm = this;
     vm.view = 'discover';
+    vm.matchSearch = '';
     vm.preferences = { maxDistance: 50, breed: '' };
     vm.breeds = stable.profiles.map(function (profile) { return profile.breed; })
       .filter(function (breed, index, breeds) { return breeds.indexOf(breed) === index; }).sort();

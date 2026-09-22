@@ -73,11 +73,20 @@
 
     <section class="matches" ng-show="vm.view === 'matches'" aria-labelledby="matches-title">
       <div class="section-heading"><h2 id="matches-title">The feeling is mutual.</h2><span>{{vm.matches.length}} matches</span></div>
-      <article class="match-row" ng-repeat="horse in vm.matches track by horse.id">
+      <div class="match-search" ng-if="vm.matches.length">
+        <label for="match-search">Search matches by name</label>
+        <div class="search-controls">
+          <input id="match-search" type="search" ng-model="vm.matchSearch" placeholder="Horse name" autocomplete="off">
+          <button class="text-button" type="button" ng-click="vm.matchSearch = ''" ng-disabled="!vm.matchSearch">Clear search</button>
+        </div>
+        <p role="status">{{(vm.matches | filter:{name: vm.matchSearch.trim()}).length}} of {{vm.matches.length}} matches</p>
+      </div>
+      <article class="match-row" ng-repeat="horse in vm.matches | filter:{name: vm.matchSearch.trim()} track by horse.id">
         <img ng-src="{{horse.photo}}" alt="{{horse.name}}">
         <div><h3>{{horse.name}}, {{horse.age}}</h3><p>{{horse.breed}} · {{horse.distance}} miles away</p><span class="match-label">You like each other</span></div>
       </article>
       <div class="empty" ng-if="!vm.matches.length"><span class="empty-symbol" aria-hidden="true">♡</span><h3>A stable relationship takes two.</h3><p>When you both like each other, your match will appear here.</p><button class="text-button" type="button" ng-click="vm.show('discover')">Discover horses</button></div>
+      <div class="empty" ng-if="vm.matches.length && !(vm.matches | filter:{name: vm.matchSearch.trim()}).length"><h3>No matches with that name.</h3><p>Try another name or clear your search.</p></div>
     </section>
 
     <p class="notice" role="status" aria-live="polite">{{vm.notice}}</p>
