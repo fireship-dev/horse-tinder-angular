@@ -35,7 +35,7 @@ test('decisions are immutable and cannot be repeated or overwritten', () => {
 test('invalid swipe inputs are rejected without changing state', () => {
   const state = fresh();
   assert.throws(() => matching.decide(profiles, state, 'unknown', 'like'), /Unknown/);
-  assert.throws(() => matching.decide(profiles, state, 'buttercup', 'superlike'), /like or pass/);
+  assert.throws(() => matching.decide(profiles, state, 'buttercup', 'maybe'), /Choose like, super like, or pass/);
   assert.throws(() => matching.decide(profiles, state, '__proto__', 'like'), /Unknown/);
   assert.deepEqual(state, fresh());
 });
@@ -55,7 +55,7 @@ test('corrupt, unsupported, or malformed storage starts fresh', () => {
 });
 
 test('storage only restores valid decisions for known horses', () => {
-  const restored = matching.restoreState('{"version":1,"decisions":{"buttercup":"like","maple":"superlike","unknown":"like","__proto__":"like"}}', profiles);
+  const restored = matching.restoreState('{"version":1,"decisions":{"buttercup":"like","maple":"maybe","unknown":"like","__proto__":"like"}}', profiles);
   assert.deepEqual(restored.decisions, { buttercup: 'like' });
 });
 

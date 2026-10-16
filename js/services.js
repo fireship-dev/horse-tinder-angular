@@ -16,18 +16,22 @@ angular.module('horseTinderApp')
       } catch (error) { storageAvailable = false; }
     }
 
+    function today() { return HorseMatching.localDay(new Date()); }
+
     return {
       profiles: HorseProfiles,
       discover: function (preferences) { return HorseMatching.discover(HorseProfiles, state, preferences); },
       matches: function () { return HorseMatching.matches(HorseProfiles, state); },
       decisionCount: function () { return Object.keys(state.decisions).length; },
       persists: function () { return storageAvailable; },
+      superLikeAvailable: function () { return HorseMatching.superLikeAvailable(state, today()); },
       decide: function (profileId, decision) {
-        state = HorseMatching.decide(HorseProfiles, state, profileId, decision);
+        state = HorseMatching.decide(HorseProfiles, state, profileId, decision, today());
         save();
       },
       reset: function () {
-        state = { version: 1, decisions: {} };
+        // Resetting discovery does not hand out another super like for today.
+        state = HorseMatching.emptyState(state.superLikedOn);
         save();
       }
     };
