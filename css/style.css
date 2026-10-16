@@ -29,6 +29,9 @@ h1 { font-size: 34px; line-height: 1.16; letter-spacing: -1.1px; margin: 0 0 17p
 .filters label { display: block; font-size: 13px; margin: 20px 0 10px; }
 .filters strong { float: right; font-weight: 500; color: var(--accent); }
 input[type=range] { width: 100%; accent-color: var(--accent); }
+.distance-units { display: flex; gap: 6px; margin-top: 8px; }
+.distance-units button { border: 1px solid var(--line); border-radius: 4px; background: white; color: var(--muted); padding: 3px 12px; font-size: 12px; }
+.distance-units button[aria-pressed=true] { border-color: var(--accent); color: var(--accent); background: #fceef1; }
 select { width: 100%; border: 1px solid #d6d3d0; border-radius: 5px; background: white; color: var(--ink); padding: 10px; }
 .location { font-size: 12px; color: var(--muted); margin-top: 20px; }
 .session { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
@@ -77,6 +80,7 @@ footer a { color: var(--muted); }
   .filters { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; padding-top: 12px; }
   .filters h2, .location { grid-column: 1 / -1; } .filters h2 { margin-bottom: 0; }
   .filters label[for=distance] { grid-column: 1; } .filters input { grid-column: 1; grid-row: 3; }
+  .distance-units { grid-column: 1 / -1; grid-row: 4; }
   .filters label[for=breed] { grid-column: 2; grid-row: 2; } .filters select { grid-column: 2; grid-row: 3; }
   .filters label { font-size: 11px; } .location { margin-top: 12px; } .session { margin: 0 0 25px; padding-top: 5px; }
   .portrait { height: 270px; } .section-heading h2 { font-size: 14px; } .notice { min-height: 0; }

@@ -3,7 +3,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 // Exercise the controller and service without requiring a browser DOM.
-function createApp(initialStorage = {}) {
+function createApp(initialStorage = {}, storageOverrides = {}) {
   const entries = new Map(Object.entries(initialStorage));
   const registrations = {};
   const module = {
@@ -14,10 +14,10 @@ function createApp(initialStorage = {}) {
     angular: { module: () => module },
     HorseProfiles: require('../../js/profiles.js'),
     HorseMatching: require('../../js/matching.js'),
-    $window: { localStorage: {
+    $window: { localStorage: Object.assign({
       getItem: key => entries.has(key) ? entries.get(key) : null,
       setItem: (key, value) => entries.set(key, value)
-    } }
+    }, storageOverrides) }
   };
   vm.createContext(sandbox);
   for (const name of ['services', 'controllers']) {
