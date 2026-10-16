@@ -50,6 +50,7 @@
         <div class="portrait">
           <img ng-src="{{vm.current.photo}}" alt="{{vm.current.name}}, a {{vm.current.breed}} horse">
           <span class="distance">{{vm.current.distance}} miles away</span>
+          <span class="super-liked-you" ng-if="vm.current.superLikesYou"><span aria-hidden="true">★</span> {{vm.current.name}} super liked you</span>
         </div>
         <div class="profile-content">
           <h3>{{vm.current.name}} <span>{{vm.current.age}}</span></h3>
@@ -58,6 +59,7 @@
           <ul class="interests" aria-label="Interests"><li ng-repeat="interest in vm.current.interests track by interest">{{interest}}</li></ul>
           <div class="actions">
             <button class="pass-button" type="button" ng-click="vm.decide('pass')"><span aria-hidden="true">×</span> Pass</button>
+            <button class="super-like-button" type="button" ng-click="vm.decide('superlike')" ng-disabled="!vm.superLikeAvailable" title="{{vm.superLikeAvailable ? 'One super like per day' : 'Super like used today. Come back tomorrow.'}}"><span aria-hidden="true">★</span> Super like</button>
             <button class="like-button" type="button" ng-click="vm.decide('like')"><span aria-hidden="true">♥</span> Like</button>
           </div>
         </div>

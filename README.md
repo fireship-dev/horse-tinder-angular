@@ -28,7 +28,10 @@ local. The development server uses Node's standard library.
 
 ## Application
 
-- Discover profiles by distance and breed, then choose Pass or Like.
+- Discover profiles by distance and breed, then choose Pass, Super like, or Like.
+- One super like is available per local calendar day. It counts as a like for
+  matching. Resetting discovery does not restore a super like already used today.
+- Profiles that super liked the current horse show a star in the deck.
 - A match is created only when a liked profile also likes the current horse.
 - Decisions survive reloads in localStorage. Reset discovery clears them.
 - Profiles and reciprocal likes are fictional fixture data, not live users.

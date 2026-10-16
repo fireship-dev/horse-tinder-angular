@@ -48,12 +48,15 @@ select { width: 100%; border: 1px solid #d6d3d0; border-radius: 5px; background:
 .interests { padding: 0; margin: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 7px; }
 .interests li { font-size: 11px; background: #f4f1ed; padding: 4px 10px; border-radius: 20px; }
 .actions { display: flex; gap: 12px; border-top: 1px solid #f0edeb; padding-top: 20px; margin-top: 22px; }
-.actions button { width: 50%; padding: 9px 15px; border-radius: 6px; font-weight: 600; }
+.actions button { flex: 1 1 0; min-width: 0; padding: 9px 15px; border-radius: 6px; font-weight: 600; }
 .actions button span { margin-right: 6px; font-size: 19px; vertical-align: -1px; }
 .pass-button { border: 1px solid #d9d6d3; background: #fff; color: #666871; }
 .like-button { border: 1px solid var(--accent); background: var(--accent); color: #fff; }
 .pass-button:hover { background: #f5f3f1; }
 .like-button:hover { background: #bd2540; }
+.super-like-button { border: 1px solid #2f6fb0; background: #fff; color: #2f6fb0; white-space: nowrap; }
+.super-like-button:hover:not(:disabled) { background: #eef4fa; }
+.super-liked-you { position: absolute; top: 15px; left: 20px; padding: 5px 10px; border-radius: 4px; background: #2f6fb0; color: #fff; font-size: 12px; font-weight: 600; }
 .notice { grid-column: 2; min-height: 25px; margin: 16px 0 0; font-size: 13px; color: #a7263e; }
 .storage-notice { grid-column: 1 / -1; color: #735221; font-size: 12px; }
 .empty { padding: 80px 30px; text-align: center; }
@@ -79,6 +82,6 @@ footer a { color: var(--muted); }
   .filters label[for=distance] { grid-column: 1; } .filters input { grid-column: 1; grid-row: 3; }
   .filters label[for=breed] { grid-column: 2; grid-row: 2; } .filters select { grid-column: 2; grid-row: 3; }
   .filters label { font-size: 11px; } .location { margin-top: 12px; } .session { margin: 0 0 25px; padding-top: 5px; }
-  .portrait { height: 270px; } .section-heading h2 { font-size: 14px; } .notice { min-height: 0; }
+  .portrait { height: 270px; } .actions { gap: 8px; } .actions button { padding: 9px 8px; font-size: 13px; } .section-heading h2 { font-size: 14px; } .notice { min-height: 0; }
   footer { margin: 20px; padding: 18px 0; flex-wrap: wrap; } footer > span:nth-child(2) { display: none; }
 }

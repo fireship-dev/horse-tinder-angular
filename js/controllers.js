@@ -15,6 +15,7 @@ angular.module('horseTinderApp')
       vm.matches = stable.matches();
       vm.decisionCount = stable.decisionCount();
       vm.persists = stable.persists();
+      vm.superLikeAvailable = stable.superLikeAvailable();
       vm.filtersActive = Number(vm.preferences.maxDistance) !== 50 || vm.preferences.breed !== '';
     };
 
@@ -26,11 +27,18 @@ angular.module('horseTinderApp')
 
     vm.decide = function (decision) {
       if (!vm.current) return;
+      if (decision === 'superlike' && !stable.superLikeAvailable()) {
+        vm.notice = 'You have used your super like for today. Come back tomorrow.';
+        vm.refresh();
+        return;
+      }
       var horse = vm.current;
+      var liked = decision === 'like' || decision === 'superlike';
       stable.decide(horse.id, decision);
-      vm.notice = decision === 'like' && horse.likesYou
+      vm.notice = liked && (horse.likesYou || horse.superLikesYou)
         ? 'It is a match! You and ' + horse.name + ' like each other.'
-        : decision === 'like' ? 'You liked ' + horse.name + '.' : 'Passed on ' + horse.name + '.';
+        : decision === 'superlike' ? 'You super liked ' + horse.name + '.'
+        : liked ? 'You liked ' + horse.name + '.' : 'Passed on ' + horse.name + '.';
       vm.refresh();
     };
 

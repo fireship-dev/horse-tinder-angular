@@ -14,7 +14,7 @@
       bio: 'Retired from the rat race. Still very much in the horse race. Will race you to the gate.',
       interests: ['Racing', 'Mountain views', 'Second breakfast'] },
     { id: 'maple', name: 'Maple', age: 6, breed: 'Arabian', distance: 12,
-      location: 'Woodside', photo: 'img/profiles/vid04.jpg', likesYou: true,
+      location: 'Woodside', photo: 'img/profiles/vid04.jpg', likesYou: true, superLikesYou: true,
       bio: 'A little dramatic, a lot of mane. My love language is bringing you the good grass.',
       interests: ['Dressage', 'Sunsets', 'Good grass'] },
     { id: 'oat-milk', name: 'Oat Milk', age: 5, breed: 'Quarter Horse', distance: 18,
