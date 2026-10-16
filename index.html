@@ -57,9 +57,10 @@
           <p class="bio">{{vm.current.bio}}</p>
           <ul class="interests" aria-label="Interests"><li ng-repeat="interest in vm.current.interests track by interest">{{interest}}</li></ul>
           <div class="actions">
-            <button class="pass-button" type="button" ng-click="vm.decide('pass')"><span aria-hidden="true">×</span> Pass</button>
-            <button class="like-button" type="button" ng-click="vm.decide('like')"><span aria-hidden="true">♥</span> Like</button>
+            <button class="pass-button" type="button" aria-keyshortcuts="ArrowLeft" ng-click="vm.decide('pass')"><span aria-hidden="true">×</span> Pass</button>
+            <button class="like-button" type="button" aria-keyshortcuts="ArrowRight" ng-click="vm.decide('like')"><span aria-hidden="true">♥</span> Like</button>
           </div>
+          <p class="shortcuts">Keyboard: <kbd aria-label="Left arrow">←</kbd> to pass, <kbd aria-label="Right arrow">→</kbd> to like</p>
         </div>
       </article>
       <div class="empty" ng-if="!vm.current">

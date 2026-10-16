@@ -53,5 +53,23 @@
     });
   }
 
-  return { restoreState: restoreState, discover: discover, decide: decide, matches: matches };
+  var keyDecisions = { ArrowLeft: 'pass', ArrowRight: 'like' };
+
+  function isTyping(target) {
+    if (!target) return false;
+    if (target.isContentEditable) return true;
+    var tag = String(target.tagName || '').toUpperCase();
+    return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
+  }
+
+  // Map a keydown event to a swipe. Held keys, modified keys, and keys typed
+  // into form fields never swipe.
+  function keyDecision(event) {
+    if (!event || event.defaultPrevented || event.repeat ||
+        event.altKey || event.ctrlKey || event.metaKey || event.shiftKey ||
+        isTyping(event.target)) return null;
+    return Object.prototype.hasOwnProperty.call(keyDecisions, event.key) ? keyDecisions[event.key] : null;
+  }
+
+  return { restoreState: restoreState, discover: discover, decide: decide, matches: matches, keyDecision: keyDecision };
 }));

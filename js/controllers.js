@@ -1,6 +1,6 @@
-/* global angular */
+/* global angular, HorseMatching */
 angular.module('horseTinderApp')
-  .controller('DiscoverCtrl', ['stable', function (stable) {
+  .controller('DiscoverCtrl', ['$document', '$scope', 'stable', function ($document, $scope, stable) {
     'use strict';
     var vm = this;
     vm.view = 'discover';
@@ -33,6 +33,20 @@ angular.module('horseTinderApp')
         : decision === 'like' ? 'You liked ' + horse.name + '.' : 'Passed on ' + horse.name + '.';
       vm.refresh();
     };
+
+    vm.handleKey = function (event) {
+      var decision = HorseMatching.keyDecision(event);
+      if (!decision || vm.view !== 'discover' || !vm.current) return false;
+      event.preventDefault();
+      vm.decide(decision);
+      return true;
+    };
+
+    function onKeydown(event) {
+      if (HorseMatching.keyDecision(event)) $scope.$apply(function () { vm.handleKey(event); });
+    }
+    $document.on('keydown', onKeydown);
+    $scope.$on('$destroy', function () { $document.off('keydown', onKeydown); });
 
     vm.show = function (view) {
       vm.view = view;
