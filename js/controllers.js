@@ -5,6 +5,17 @@ angular.module('horseTinderApp')
     var vm = this;
     vm.view = 'discover';
     vm.preferences = { maxDistance: 50, breed: '' };
+    vm.distanceUnit = stable.distanceUnit();
+    vm.formatDistance = function (kilometres) {
+      var distance = vm.distanceUnit === 'miles' ? kilometres / 1.609344 : kilometres;
+      return Math.round(distance * 10) / 10 + ' ' + vm.distanceUnit;
+    };
+
+    vm.setDistanceUnit = function (unit) {
+      stable.setDistanceUnit(unit);
+      vm.distanceUnit = stable.distanceUnit();
+      vm.persists = stable.persists();
+    };
     vm.breeds = stable.profiles.map(function (profile) { return profile.breed; })
       .filter(function (breed, index, breeds) { return breeds.indexOf(breed) === index; }).sort();
     vm.notice = '';

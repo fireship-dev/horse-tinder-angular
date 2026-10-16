@@ -29,6 +29,7 @@ local. The development server uses Node's standard library.
 ## Application
 
 - Discover profiles by distance and breed, then choose Pass or Like.
+- Switch between km and miles beside the distance filter; the choice survives reloads.
 - A match is created only when a liked profile also likes the current horse.
 - Decisions survive reloads in localStorage. Reset discovery clears them.
 - Profiles and reciprocal likes are fictional fixture data, not live users.

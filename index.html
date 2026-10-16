@@ -28,8 +28,12 @@
 
       <form class="filters" ng-submit="$event.preventDefault()">
         <h2>Discovery preferences</h2>
-        <label for="distance">Maximum distance <strong>{{vm.preferences.maxDistance}} miles</strong></label>
-        <input id="distance" type="range" min="1" max="50" step="1" ng-model="vm.preferences.maxDistance" ng-change="vm.refresh()">
+        <label for="distance">Maximum distance <strong>{{vm.formatDistance(vm.preferences.maxDistance)}}</strong></label>
+        <input id="distance" type="range" min="1" max="50" step="1" ng-model="vm.preferences.maxDistance" ng-change="vm.refresh()" ng-attr-aria-valuetext="{{vm.formatDistance(vm.preferences.maxDistance)}}">
+        <div class="distance-units" role="group" aria-label="Distance unit">
+          <button type="button" ng-click="vm.setDistanceUnit('km')" ng-attr-aria-pressed="{{vm.distanceUnit === 'km'}}">km</button>
+          <button type="button" ng-click="vm.setDistanceUnit('miles')" ng-attr-aria-pressed="{{vm.distanceUnit === 'miles'}}">miles</button>
+        </div>
         <label for="breed">Breed</label>
         <select id="breed" ng-model="vm.preferences.breed" ng-options="breed for breed in vm.breeds" ng-change="vm.refresh()">
           <option value="">All breeds</option>
@@ -49,7 +53,7 @@
       <article class="profile" ng-if="vm.current">
         <div class="portrait">
           <img ng-src="{{vm.current.photo}}" alt="{{vm.current.name}}, a {{vm.current.breed}} horse">
-          <span class="distance">{{vm.current.distance}} miles away</span>
+          <span class="distance">{{vm.formatDistance(vm.current.distance)}} away</span>
         </div>
         <div class="profile-content">
           <h3>{{vm.current.name}} <span>{{vm.current.age}}</span></h3>
@@ -75,7 +79,7 @@
       <div class="section-heading"><h2 id="matches-title">The feeling is mutual.</h2><span>{{vm.matches.length}} matches</span></div>
       <article class="match-row" ng-repeat="horse in vm.matches track by horse.id">
         <img ng-src="{{horse.photo}}" alt="{{horse.name}}">
-        <div><h3>{{horse.name}}, {{horse.age}}</h3><p>{{horse.breed}} · {{horse.distance}} miles away</p><span class="match-label">You like each other</span></div>
+        <div><h3>{{horse.name}}, {{horse.age}}</h3><p>{{horse.breed}} · {{vm.formatDistance(horse.distance)}} away</p><span class="match-label">You like each other</span></div>
       </article>
       <div class="empty" ng-if="!vm.matches.length"><span class="empty-symbol" aria-hidden="true">♡</span><h3>A stable relationship takes two.</h3><p>When you both like each other, your match will appear here.</p><button class="text-button" type="button" ng-click="vm.show('discover')">Discover horses</button></div>
     </section>
